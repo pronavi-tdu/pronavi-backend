@@ -1,4 +1,3 @@
-#test data
 user = User.create!(user_id: 'test123', password: 'password')
 
 status_data = {
