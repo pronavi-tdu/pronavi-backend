@@ -10,7 +10,9 @@ status_data = {
   6 => 'Private'
 }
 
+
 status_data.each do |status_id, status_name|
   status = Status.create!(status_id: status_id, status_name: status_name)
-  Schedule.create!(user_id: user.user_id, status_id: status.status_id)
 end
+
+Schedule.create!(user_id: user.user_id, status_id: 6)
