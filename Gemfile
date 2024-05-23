@@ -60,6 +60,9 @@ group :development do
   # gem "spring"
 end
 
+#cors
+gem 'rack-cors'
+
 gem 'dotenv-rails'
 
 group :test do
