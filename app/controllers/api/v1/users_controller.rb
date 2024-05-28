@@ -15,7 +15,14 @@ module Api
       end
       
       def index
-        users = User.includes(:statuses)
+        if params[:department_id]
+          users = User.where(department_id: params[:department_id])
+        else
+          users = User.all
+        end
+        
+        users = users.includes(:statuses, :department)
+        
         if users.empty?
           render json: { message: "No users found" }, status: 400
         else
