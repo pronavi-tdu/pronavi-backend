@@ -1,5 +1,17 @@
 #test data
-user = User.create!(user_id: 'test123', password: 'password')
+department_data = {
+  1 => 'RU',
+  2 => 'RB',
+  3 => 'RD',
+  4 => 'RE',
+  5 => 'RM',
+  6 => 'RG'
+}
+department_data.each do |department_id, department_name|
+  department = Department.create!(department_id: department_id, department_name: department_name)
+end
+
+user = User.create!(user_id: 'test123')
 
 status_data = {
   1 => 'Lecture',
@@ -9,7 +21,6 @@ status_data = {
   5 => 'B_trip',
   6 => 'Private'
 }
-
 
 status_data.each do |status_id, status_name|
   status = Status.create!(status_id: status_id, status_name: status_name)

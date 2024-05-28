@@ -19,13 +19,31 @@ module Api
         if users.empty?
           render json: { message: "No users found" }, status: 400
         else
-          render json: users.to_json(include: :statuses)
+          render json: users.to_json(include: [:statuses, :department])
+        end
+      end
+
+      def update_user_name
+        user = User.find_by(user_id: params[:user_id])
+        if user.update(user_name: params[:user_name])
+          render json: { message: "User's name updated successfully" }, status: 200
+        else
+          render json: { error: user.errors.full_messages }, status: 400
+        end
+      end
+
+      def update_user_department
+        user = User.find_by(user_id: params[:user_id])
+        if user.update(department_id: params[:department_id])
+          render json: { message: "User's department updated successfully" }, status: 200
+        else
+          render json: { error: user.errors.full_messages }, status: 400
         end
       end
 
       private
       def user_params
-        params.require(:user).permit(:user_id, :password)
+        params.require(:user).permit(:user_id)
       end
     end
   end

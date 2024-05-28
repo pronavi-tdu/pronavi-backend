@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    belongs_to :department, optional: true
     has_many :schedules
     has_many :statuses, through: :schedules
 end
