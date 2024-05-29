@@ -8,32 +8,32 @@ module Api
         status_id = params[:status_id] || 6 
         if @user.save
           @user.schedules.create!(status_id: status_id)
-          render json: { user: @user }, status: 201
+          render json: {registration: true}, status: 201
         else
           render status: 400
         end
       end
       
       def index
-        if params[:department_id]
-          users = User.where(department_id: params[:department_id])
-        else
-          users = User.all
-        end
-        
-        users = users.includes(:statuses, :department)
-        
+        users = User.includes(:schedules, :department)
         if users.empty?
           render json: { message: "No users found" }, status: 400
         else
-          render json: users.to_json(include: [:statuses, :department])
+          render json: users.map { |user| 
+            {
+              User_id: user.user_id,
+              User_name: user.user_name,
+              Department_id: user.department_id,
+              Status_id: user.schedules.first&.status_id 
+            }
+          }, status: 200
         end
       end
 
       def update_user_name
         user = User.find_by(user_id: params[:user_id])
         if user.update(user_name: params[:user_name])
-          render json: { message: "User's name updated successfully" }, status: 200
+          render json: { "update": true }, status: 200
         else
           render json: { error: user.errors.full_messages }, status: 400
         end
@@ -42,7 +42,7 @@ module Api
       def update_user_department
         user = User.find_by(user_id: params[:user_id])
         if user.update(department_id: params[:department_id])
-          render json: { message: "User's department updated successfully" }, status: 200
+          render json: { "update": true }, status: 200
         else
           render json: { error: user.errors.full_messages }, status: 400
         end
@@ -50,7 +50,7 @@ module Api
 
       private
       def user_params
-        params.require(:user).permit(:user_id)
+        params.require(:user).permit(:user_id, :user_name, :department_id)
       end
     end
   end

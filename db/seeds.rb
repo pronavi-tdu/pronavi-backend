@@ -11,7 +11,7 @@ department_data.each do |department_id, department_name|
   department = Department.create!(department_id: department_id, department_name: department_name)
 end
 
-user = User.create!(user_id: 'test123')
+user = User.create!(user_id: 'test123',user_name: '電大太郎',department_id: 1)
 
 status_data = {
   1 => 'Lecture',

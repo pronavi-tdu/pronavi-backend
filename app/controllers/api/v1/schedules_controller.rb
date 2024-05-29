@@ -7,9 +7,9 @@ module Api
       def update
         @schedule = @user.schedules.first
         if @schedule.update(schedule_params)
-          render json: { status: 'Success', message: 'Schedule updated successfully' }, status: :ok
+          render json: {"update": true}
         else
-          render json: { status: 'Error', message: 'Failed to update schedule' }, status: :unprocessable_entity
+          render json: { status: 'Error', message: 'Failed to update schedule' }
         end
       end
 
