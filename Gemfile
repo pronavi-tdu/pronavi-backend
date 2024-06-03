@@ -63,6 +63,9 @@ end
 #cors
 gem 'rack-cors'
 
+#定時処理
+gem 'whenever', require: false
+
 gem 'dotenv-rails'
 
 group :test do

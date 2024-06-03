@@ -30,6 +30,29 @@ module Api
         end
       end
 
+      def locations
+        user = User.find_by(user_id: params[:user_id])
+        
+        if user
+          latitude = params[:location][:latitude].to_f
+          longitude = params[:location][:longitude].to_f
+          
+          schedule = user.schedules.first
+          
+          if user.within_university_bounds?(latitude, longitude)
+            if schedule.status_id == 5
+              schedule.update(status_id: 2)
+            end
+          else
+            schedule.update(status_id: 5)
+          end
+          
+          render json: {status: "success",message: "Location received" }, status: 200
+        else
+          render json: { error: "error" }, status: 404
+        end
+      end
+
       def update_user_name
         user = User.find_by(user_id: params[:user_id])
         if user.update(user_name: params[:user_name])
@@ -52,6 +75,11 @@ module Api
       def user_params
         params.require(:user).permit(:user_id, :user_name, :department_id)
       end
+
+      def location_params
+        params.require(:user).permit(:user_id, location: [:latitude, :longitude])
+      end
+
     end
   end
 end
