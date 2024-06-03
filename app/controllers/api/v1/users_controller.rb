@@ -44,9 +44,11 @@ module Api
               schedule.update(status_id: 2)
             end
           else
-            schedule.update(status_id: 5)
+            if schedule.status_id != 5
+              schedule.update(status_id: 5)
+            end
           end
-          
+
           render json: {status: "success",message: "Location received" }, status: 200
         else
           render json: { error: "error" }, status: 404
