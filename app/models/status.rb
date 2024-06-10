@@ -1,3 +1,3 @@
 class Status < ApplicationRecord
-    has_one :schedule
+    has_many :schedules
 end
