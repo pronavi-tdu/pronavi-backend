@@ -24,6 +24,7 @@ module Api
               User_id: user.user_id,
               User_name: user.user_name,
               Department_id: user.department_id,
+              Mailaddress: user.mailaddress,
               Status_id: user.schedules.first&.status_id 
             }
           }, status: 200
@@ -74,11 +75,7 @@ module Api
 
       private
       def user_params
-        params.require(:user).permit(:user_id, :user_name, :department_id)
-      end
-
-      def location_params
-        params.require(:user).permit(:user_id, location: [:latitude, :longitude])
+        params.require(:user).permit(:user_id, :user_name, :department_id, :mailaddress)
       end
 
     end
