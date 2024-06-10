@@ -15,7 +15,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: dbuser
   password: <%= ENV["PASSWORD"] %>
-  host: localhost
+  host: 133.14.14.13
   port: 3306
   ssl_mode: :disabled
   sslverify: false
@@ -33,4 +33,3 @@ production:
   database: myapp_production
   username: dbuser
   password: <%= ENV["PASSWORD"] %>
-  host: localhost

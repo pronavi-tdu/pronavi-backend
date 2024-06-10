@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_23_054430) do
+
+ActiveRecord::Schema[7.1].define(version: 2024_06_10_091643) do
   create_table "departments", primary_key: "department_id", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "department_name"
     t.datetime "created_at", null: false
@@ -37,6 +38,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_054430) do
     t.bigint "department_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "mailaddress"
     t.index ["department_id"], name: "fk_rails_f29bf9cdf2"
   end
 

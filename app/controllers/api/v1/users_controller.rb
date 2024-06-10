@@ -24,6 +24,7 @@ module Api
               User_id: user.user_id,
               User_name: user.user_name,
               Department_id: user.department_id,
+              Mailaddress: user.mailaddress,
               Status_id: user.schedules.first&.status_id 
             }
           }, status: 200
@@ -34,12 +35,10 @@ module Api
         user = User.find_by(user_id: params[:user_id])
         
         if user
-          latitude = params[:location][:latitude].to_f
-          longitude = params[:location][:longitude].to_f
-          
+          university_boolean = params[:location][:university_boolean].to_i
           schedule = user.schedules.first
           
-          if user.within_university_bounds?(latitude, longitude)
+          if user.within_university?(university_boolean)
             if schedule.status_id == 5
               schedule.update(status_id: 2)
             end
@@ -75,11 +74,7 @@ module Api
 
       private
       def user_params
-        params.require(:user).permit(:user_id, :user_name, :department_id)
-      end
-
-      def location_params
-        params.require(:user).permit(:user_id, location: [:latitude, :longitude])
+        params.require(:user).permit(:user_id, :user_name, :department_id, :mailaddress)
       end
 
     end
