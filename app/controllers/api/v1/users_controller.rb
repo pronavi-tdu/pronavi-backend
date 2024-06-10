@@ -34,12 +34,11 @@ module Api
         user = User.find_by(user_id: params[:user_id])
         
         if user
-          latitude = params[:location][:latitude].to_f
-          longitude = params[:location][:longitude].to_f
+          university_boolean = params[:location][:university_boolean].to_i
           
           schedule = user.schedules.first
           
-          if user.within_university_bounds?(latitude, longitude)
+          if user.within_university?(university_boolean)
             if schedule.status_id == 5
               schedule.update(status_id: 2)
             end
