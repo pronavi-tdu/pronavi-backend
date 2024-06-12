@@ -54,6 +54,21 @@ module Api
         end
       end
 
+      def check_mailaddress
+        mailaddress = params[:mailaddress]
+        
+        if mailaddress.present?
+          user = User.find_by(mailaddress: mailaddress)
+          if user
+            render json: {status: 1}
+          else
+            render json: {status: 0}
+          end
+        else
+          render json: { error: 'parameter error' }, status: :bad_request
+        end
+      end
+
       def update_user_name
         user = User.find_by(user_id: params[:user_id])
         if user.update(user_name: params[:user_name])
