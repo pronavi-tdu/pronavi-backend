@@ -36,7 +36,6 @@ module Api
         
         if user
           university_boolean = params[:location][:university_boolean].to_i
-          
           schedule = user.schedules.first
           
           if user.within_university?(university_boolean)
@@ -52,6 +51,21 @@ module Api
           render json: {status: "success",message: "Location received" }, status: 200
         else
           render json: { error: "error" }, status: 404
+        end
+      end
+
+      def check_mailaddress
+        mailaddress = params[:mailaddress]
+        
+        if mailaddress.present?
+          user = User.find_by(mailaddress: mailaddress)
+          if user
+            render json: {status: 1}
+          else
+            render json: {status: 0}
+          end
+        else
+          render json: { error: 'parameter error' }, status: :bad_request
         end
       end
 
