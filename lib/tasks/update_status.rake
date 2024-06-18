@@ -5,6 +5,7 @@ namespace :update_status do
         user.schedules.update_all(status_id: 5)
       end
       StatusLock.update_all(lock_boolean: false)
-      puts 'All user statuses updated to 5 and statuses unlock '
+      current_time = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+      puts "All user statuses updated to 5 and statuses unlock at #{current_time}"
     end
   end
