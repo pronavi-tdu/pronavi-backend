@@ -7,15 +7,8 @@ module Api
         @user = User.new(user_params)
         status_id = params[:status_id] || 6 
         if @user.save
-          schedule = @user.schedules.create(status_id: status_id)
-    
-          if schedule
-            schedule.create_status_lock
-            render json: {registration: true}, status: 201
-          else
-            render json: {registration: false}, status: 400
-          end
-          
+          @user.schedules.create!(status_id: status_id)
+          render json: {registration: true}, status: 201
         else
           render status: 400
         end
@@ -46,7 +39,7 @@ module Api
           schedule = user.schedules.first
           
           if user.within_university?(university_boolean)
-            if schedule.status_id == 5 && schedule.status_lock.lock_boolean == false
+            if schedule.status_id == 5
               schedule.update(status_id: 2)
             end
           else
@@ -54,6 +47,7 @@ module Api
               schedule.update(status_id: 5)
             end
           end
+
           render json: {status: "success",message: "Location received" }, status: 200
         else
           render json: { error: "error" }, status: 404

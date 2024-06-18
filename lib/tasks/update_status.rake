@@ -4,7 +4,6 @@ namespace :update_status do
       User.find_each do |user|
         user.schedules.update_all(status_id: 5)
       end
-      StatusLock.update_all(lock_boolean: false)
-      puts 'All user statuses updated to 5 and statuses unlock '
+      puts 'All user statuses have been updated to 5'
     end
   end
