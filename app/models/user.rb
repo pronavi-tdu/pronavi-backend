@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   belongs_to :department
-  has_many :schedules
+  has_many :schedules, dependent: :destroy
   has_many :statuses, through: :schedules
 
   UNIVERSITY_IN = 1

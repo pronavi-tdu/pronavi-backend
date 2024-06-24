@@ -11,6 +11,7 @@ module Api
     
           if schedule
             schedule.create_status_lock
+            schedule.create_status_detail
             render json: {registration: true}, status: 201
           else
             render json: {registration: false}, status: 400
@@ -22,17 +23,19 @@ module Api
       end
       
       def index
-        users = User.includes(:schedules, :department)
+        users = User.includes(department: [], schedules: :status_detail)
         if users.empty?
           render json: { message: "No users found" }, status: 400
         else
           render json: users.map { |user| 
+            schedule = user.schedules.first
             {
               User_id: user.user_id,
               User_name: user.user_name,
               Department_id: user.department_id,
               Mailaddress: user.mailaddress,
-              Status_id: user.schedules.first&.status_id 
+              Status_id: schedule&.status_id,
+              Description: schedule&.status_detail&.description
             }
           }, status: 200
         end
