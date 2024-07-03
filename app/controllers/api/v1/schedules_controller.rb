@@ -8,7 +8,6 @@ module Api
         @schedule = @user.schedules.first
 
           if @schedule.update(schedule_params)
-            @schedule.status_detail.update(description: '')
 
             if @schedule.status_id == 5 && Time.current < Time.current.end_of_day - 10.minutes
               status_lock = @schedule.status_lock
